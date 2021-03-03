@@ -8,6 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.POST;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_citysearch;
@@ -25,6 +34,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_cityname = findViewById(R.id.main_tv_cityname);
         et_cityname = findViewById(R.id.main_et_citysearch);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AccuWeatherApi accuWeatherApi = retrofit.create(AccuWeatherApi.class);
+
+        Call<List<AccuGetCityDetails>> call = accuWeatherApi.getPosts();
+
+        //.enqueue is a running a thread in backgrounf
+        call.enqueue(new Callback<List<AccuGetCityDetails>>() {
+            @Override
+            public void onResponse(Call<List<AccuGetCityDetails>> call, Response<List<AccuGetCityDetails>> response) {
+
+                if(!response.isSuccessful()){
+                    tv_cityname.setText("Code: " + response.code());
+                    return;
+                }
+
+                List<AccuGetCityDetails> posts = response.body();
+
+                for(AccuGetCityDetails post : posts){
+                    String content = "";
+                    content += "text: " + post.getText() + "\n";
+                    content += "titile: " + post.getTitle() + "\n";
+                    content += "key: " + post.getId() + "\n\n";
+
+                    tv_cityname.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AccuGetCityDetails>> call, Throwable t) {
+                tv_cityname.setText(t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -45,6 +90,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String CityName = et_cityname.getText().toString().trim();
         tv_cityname.setText(et_cityname.getText());
     }
-
 
 }
