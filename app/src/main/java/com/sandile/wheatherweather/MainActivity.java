@@ -2,6 +2,7 @@ package com.sandile.wheatherweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,49 +35,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_cityname = findViewById(R.id.main_tv_cityname);
         et_cityname = findViewById(R.id.main_et_citysearch);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        AccuWeatherApi accuWeatherApi = retrofit.create(AccuWeatherApi.class);
 
-        Call<List<AccuGetCityDetails>> call = accuWeatherApi.getPosts();
 
-        //.enqueue is a running a thread in backgrounf
-        call.enqueue(new Callback<List<AccuGetCityDetails>>() {
-            @Override
-            public void onResponse(Call<List<AccuGetCityDetails>> call, Response<List<AccuGetCityDetails>> response) {
-
-                if(!response.isSuccessful()){
-                    tv_cityname.setText("Code: " + response.code());
-                    return;
-                }
-
-                List<AccuGetCityDetails> posts = response.body();
-
-                for(AccuGetCityDetails post : posts){
-                    String content = "";
-                    content += "text: " + post.getText() + "\n";
-                    content += "titile: " + post.getTitle() + "\n";
-                    content += "key: " + post.getId() + "\n\n";
-
-                    tv_cityname.append(content);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<AccuGetCityDetails>> call, Throwable t) {
-                tv_cityname.setText(t.getMessage());
-            }
-        });
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.main_btn_search:
-                SearchCity();
+                //SearchCity();
+                getDurbanDetails();
+            case R.id.main_fab_goto_forecastList:
+                startActivity(new Intent(this, ForecastList.class));
 //            case R.id.main_btn_daily_weight:
 //                startActivity(new Intent(this, WeightLog.class));
 //                break;
@@ -91,4 +62,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_cityname.setText(et_cityname.getText());
     }
 
+    private void getDurbanDetails(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=xkiA0fqNBMqMLSc2dHK8Q8aIwGjWnBAY&q=durban")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AccuWeatherApi accuWeatherApi = retrofit.create(AccuWeatherApi.class);
+
+        Call<List<AccuGetCityDetails>> call = accuWeatherApi.getPosts();
+
+        //.enqueue is a running a thread in background
+        call.enqueue(new Callback<List<AccuGetCityDetails>>() {
+            @Override
+            public void onResponse(Call<List<AccuGetCityDetails>> call, Response<List<AccuGetCityDetails>> response) {
+
+                if(!response.isSuccessful()){
+                    tv_cityname.setText("Code: " + response.code());
+                    return;
+                }
+
+                List<AccuGetCityDetails> posts = response.body();
+
+                for(AccuGetCityDetails post : posts){
+//                    String content = "";
+//                    content += "Key: " + post.getKey() + "\n";
+//                    content += "Type: " + post.getType() + "\n";
+//                    content += "Rank: " + post.getRank() + "\n\n";
+
+                    tv_cityname.append(post.getKey());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AccuGetCityDetails>> call, Throwable t) {
+                tv_cityname.setText(t.getMessage());
+            }
+        });
+    }
 }

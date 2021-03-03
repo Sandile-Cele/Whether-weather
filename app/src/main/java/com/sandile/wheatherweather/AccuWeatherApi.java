@@ -8,6 +8,6 @@ import retrofit2.http.POST;
 
 public interface AccuWeatherApi {
 
-    @GET("posts")
+    @GET("")
     Call<List<AccuGetCityDetails>> getPosts();
 }
