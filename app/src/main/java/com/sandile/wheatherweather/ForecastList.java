@@ -12,7 +12,6 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
 
     private FloatingActionButton fab_goto_main;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
