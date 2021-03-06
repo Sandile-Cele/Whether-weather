@@ -3,22 +3,24 @@ package com.sandile.wheatherweather;
 import com.google.gson.annotations.SerializedName;
 
 public class AccuGetCityDetails {
-    @SerializedName("Key")
-    private String key;
-    @SerializedName("Type")
-    private String type;
-    @SerializedName("Rank")
-    private Integer rank;
+    public int userId;
+    public int id;
+    public String title;
+    public String body;
 
-    public String getKey() {
-        return key;
+    public int getUserId() {
+        return userId;
     }
 
-    public String getType() {
-        return type;
+    public int getId() {
+        return id;
     }
 
-    public Integer getRank() {
-        return rank;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

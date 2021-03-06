@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,18 +25,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_citysearch;
     private TextView tv_cityname;
     private EditText et_cityname;
+    private FloatingActionButton fab_goto_forecastList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initializing pallets
         btn_citysearch = findViewById(R.id.main_btn_search);
         btn_citysearch.setOnClickListener(this);
 
         tv_cityname = findViewById(R.id.main_tv_cityname);
         et_cityname = findViewById(R.id.main_et_citysearch);
 
+        fab_goto_forecastList = findViewById(R.id.main_fab_goto_forecastList);
+        fab_goto_forecastList.setOnClickListener(this);
 
 
 
@@ -45,15 +51,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.main_btn_search:
                 //SearchCity();
-                getDurbanDetails();
+                getJsonDetails();
+                break;
             case R.id.main_fab_goto_forecastList:
-                startActivity(new Intent(this, ForecastList.class));
+                finish();
+                startActivity(new Intent(this, FloatingActionButton.class));
+                break;
 //            case R.id.main_btn_daily_weight:
 //                startActivity(new Intent(this, WeightLog.class));
 //                break;
 //            case R.id.main_btn_meal_log:
 //                startActivity(new Intent(this, MealLog.class));
-                break;
         }
     }
 
@@ -62,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_cityname.setText(et_cityname.getText());
     }
 
-    private void getDurbanDetails(){
+    private void getJsonDetails(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=xkiA0fqNBMqMLSc2dHK8Q8aIwGjWnBAY&q=durban")
+                .baseUrl("https://jsonplaceholder.typicode.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -82,15 +90,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
 
-                List<AccuGetCityDetails> posts = response.body();
+                List<AccuGetCityDetails> AccuDetailsObj = response.body();
 
-                for(AccuGetCityDetails post : posts){
-//                    String content = "";
-//                    content += "Key: " + post.getKey() + "\n";
-//                    content += "Type: " + post.getType() + "\n";
-//                    content += "Rank: " + post.getRank() + "\n\n";
+                for(AccuGetCityDetails accuDetailList : AccuDetailsObj){
+                    String tempApiDataString = "";
+                    tempApiDataString += "Id: " + accuDetailList.getId() + "\n";
+                    tempApiDataString += "UserId: " + accuDetailList.getUserId() + "\n";
+                    tempApiDataString += "Title: " + accuDetailList.getTitle() + "\n";
+                    tempApiDataString += "Body: " + accuDetailList.getBody() + "\n";
 
-                    tv_cityname.append(post.getKey());
+                    tv_cityname.append(tempApiDataString);
                 }
             }
 
