@@ -30,7 +30,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_fab_goto_forecastList"
         android:layout_width="74dp"
@@ -43,23 +42,21 @@
         app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="347dp"
-        android:layout_height="489dp"
+        android:layout_width="368dp"
+        android:layout_height="308dp"
+        android:padding="10dp"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent">
+
 
         <TextView
             android:id="@+id/main_tv_cityname"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="88dp"
-            android:text="City name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_btn_search" />
-
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     </androidx.core.widget.NestedScrollView>
 
 

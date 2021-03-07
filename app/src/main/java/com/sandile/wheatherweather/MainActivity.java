@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.AccuApiPojo.DailyForecast;
+import com.AccuApiPojo.RootAccu5Day;
+import com.AccuApiPojo.Temperature;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getJsonDetails(){
-        final String BASE_URL = "https://jsonplaceholder.typicode.com/";
+        final String BASE_URL = "https://dataservice.accuweather.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -81,33 +84,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AccuWeatherApi accuWeatherApi = retrofit.create(AccuWeatherApi.class);
 
-        Call<List<AccuGetCityDetails>> call = accuWeatherApi.getPosts();
+        Call<RootAccu5Day> call = accuWeatherApi.getPosts();
 
         //.enqueue is a running a thread in background
-        call.enqueue(new Callback<List<AccuGetCityDetails>>() {
+        call.enqueue(new Callback<RootAccu5Day>() {
             @Override
-            public void onResponse(Call<List<AccuGetCityDetails>> call, Response<List<AccuGetCityDetails>> response) {
+            public void onResponse(Call<RootAccu5Day> call, Response<RootAccu5Day> response) {
 
                 if(!response.isSuccessful()){
                     tv_cityname.setText("Code: " + response.code());
                     return;
                 }
 
-                List<AccuGetCityDetails> AccuDetailsObj = response.body();
+                RootAccu5Day AccuDetailsObj = response.body();
 
-                for(AccuGetCityDetails accuDetailList : AccuDetailsObj){
-                    String tempApiDataString = "";
-                    tempApiDataString += " The use Id is: " + accuDetailList.getId() + "\n";
-                    tempApiDataString += "UserId: " + accuDetailList.getUserId() + "\n";
-                    tempApiDataString += "Title: " + accuDetailList.getTitle() + "\n";
-                    tempApiDataString += "Body: " + accuDetailList.getBody() + "\n\n";
-                    tempApiDataString += "-------------------------";
-                    tv_cityname.append(tempApiDataString);
+                tv_cityname.append("Description: " + AccuDetailsObj.getHeadline().getText() + "\n\n");
+
+                for(DailyForecast oneDay: AccuDetailsObj.getDailyForecasts()){
+                    int i = 1;
+                    tv_cityname.append("Day " + i++ + " Max temp: " + oneDay.temperature.maximum.getValue() + "\n");
                 }
+
             }
 
             @Override
-            public void onFailure(Call<List<AccuGetCityDetails>> call, Throwable t) {
+            public void onFailure(Call<RootAccu5Day> call, Throwable t) {
                 tv_cityname.setText(t.getMessage());
             }
         });

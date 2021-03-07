@@ -1,23 +1,64 @@
 package com.AccuApiPojo;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Headline{
-    @SerializedName("EffectiveDate") 
-    public Date effectiveDate;
+    @SerializedName("EffectiveDate")
+    private String effectiveDate;
     @SerializedName("EffectiveEpochDate") 
-    public int effectiveEpochDate;
+    private int effectiveEpochDate;
     @SerializedName("Severity") 
-    public int severity;
+    private int severity;
     @SerializedName("Text") 
-    public String text;
+    private String text;
     @SerializedName("Category") 
-    public String category;
+    private String category;
     @SerializedName("EndDate") 
-    public Date endDate;
+    private Date endDate;
     @SerializedName("EndEpochDate") 
-    public int endEpochDate;
+    private int endEpochDate;
     @SerializedName("MobileLink") 
-    public String mobileLink;
+    private String mobileLink;
     @SerializedName("Link") 
-    public String link;
+    private String link;
+
+    public Headline() {
+    }
+
+    public String getEffectiveDate() {
+        return effectiveDate;
+    }
+
+    public int getEffectiveEpochDate() {
+        return effectiveEpochDate;
+    }
+
+    public int getSeverity() {
+        return severity;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public int getEndEpochDate() {
+        return endEpochDate;
+    }
+
+    public String getMobileLink() {
+        return mobileLink;
+    }
+
+    public String getLink() {
+        return link;
+    }
 }

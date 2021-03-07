@@ -1,23 +1,24 @@
 package com.AccuApiPojo;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class DailyForecast{
     @SerializedName("Date")
     public Date date;
-    @SerializedName("EpochDate") 
+    @SerializedName("EpochDate")
     public int epochDate;
-    @SerializedName("Temperature") 
+    @SerializedName("Temperature")
     public Temperature temperature;
-    @SerializedName("Day") 
+    @SerializedName("Day")
     public Day day;
-    @SerializedName("Night") 
+    @SerializedName("Night")
     public Night night;
-    @SerializedName("Sources") 
+    @SerializedName("Sources")
     public List<String> sources;
-    @SerializedName("MobileLink") 
+    @SerializedName("MobileLink")
     public String mobileLink;
-    @SerializedName("Link") 
+    @SerializedName("Link")
     public String link;
 }
