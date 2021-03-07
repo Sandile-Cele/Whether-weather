@@ -1,6 +1,5 @@
 package com.sandile.wheatherweather;
 
-import com.google.gson.annotations.SerializedName;
 
 public class AccuGetCityDetails {
     public int userId;

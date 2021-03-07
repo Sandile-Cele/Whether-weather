@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tv_cityname;
     private EditText et_cityname;
     private FloatingActionButton fab_goto_forecastList;
-
-    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
+    // Add progress bar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_fab_goto_forecastList:
                 finish();
-                startActivity(new Intent(this, FloatingActionButton.class));
+                startActivity(new Intent(this, ForecastList.class));
                 break;
 //            case R.id.main_btn_daily_weight:
 //                startActivity(new Intent(this, WeightLog.class));
@@ -73,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getJsonDetails(){
+        final String BASE_URL = "https://jsonplaceholder.typicode.com/";
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -96,11 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for(AccuGetCityDetails accuDetailList : AccuDetailsObj){
                     String tempApiDataString = "";
-                    tempApiDataString += "Id: " + accuDetailList.getId() + "\n";
+                    tempApiDataString += " The use Id is: " + accuDetailList.getId() + "\n";
                     tempApiDataString += "UserId: " + accuDetailList.getUserId() + "\n";
                     tempApiDataString += "Title: " + accuDetailList.getTitle() + "\n";
-                    tempApiDataString += "Body: " + accuDetailList.getBody() + "\n";
-
+                    tempApiDataString += "Body: " + accuDetailList.getBody() + "\n\n";
+                    tempApiDataString += "-------------------------";
                     tv_cityname.append(tempApiDataString);
                 }
             }
@@ -111,22 +112,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
-    public class RetrofitClientInstance {
-
-        private Retrofit retrofit;
-        private final String BASE_URL = "https://jsonplaceholder.typicode.com/";
-
-        public Retrofit getRetrofitInstance() {
-            if (retrofit == null) {
-                retrofit = new retrofit2.Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-            }
-            return retrofit;
-        }
-    }
-
 
 }

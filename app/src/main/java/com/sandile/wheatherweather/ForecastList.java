@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ForecastList extends AppCompatActivity implements View.OnClickListener {
 
     private FloatingActionButton fab_goto_main;
+    // Add progress bar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
