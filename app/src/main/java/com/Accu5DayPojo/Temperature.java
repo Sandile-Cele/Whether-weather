@@ -1,4 +1,4 @@
-package com.AccuApiPojo;
+package com.Accu5DayPojo;
 import com.google.gson.annotations.SerializedName;
 
 public class Temperature{
