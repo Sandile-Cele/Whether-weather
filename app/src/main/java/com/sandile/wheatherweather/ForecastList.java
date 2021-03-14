@@ -27,7 +27,7 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.forecastlist_fab_goto_main:
-                finish();
+//                finish(); //This is to close activity
                 startActivity(new Intent(this, MainActivity.class));
         }
     }
