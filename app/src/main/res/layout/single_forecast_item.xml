@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/forecastItem_iv_viewImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:padding="2dp" />
+
+        <TextView
+            android:id="@+id/forecastItem_tv_line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/forecastItem_iv_viewImage"
+            android:text="Temp Line 1"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            tools:visibility="visible">
+        </TextView>
+
+        <TextView
+            android:id="@+id/forecastItem_tv_line2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/forecastItem_tv_line1"
+            android:layout_alignStart="@+id/forecastItem_tv_line1"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:text="Temp Line 2"
+            android:textSize="15sp"></TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+
+<!--    to make the card only as big as the content
+        android:layout_height="wrap_content"
+-->

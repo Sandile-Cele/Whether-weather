@@ -1,4 +1,4 @@
-package com.AccuCitySearchPojo;
+package com.AccuPojo.AccuCitySearchPojo;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
     int version;
     @SerializedName("Key")
     private
-    String key;
+    int key;
     @SerializedName("Type")
     private
     String type;
@@ -32,7 +32,7 @@ import com.google.gson.annotations.SerializedName;
          return version;
      }
 
-     public String getKey() {
+     public int getKey() {
          return key;
      }
 
@@ -54,33 +54,5 @@ import com.google.gson.annotations.SerializedName;
 
      public String getPrimaryPostalCode() {
          return primaryPostalCode;
-     }
-
-     public void setVersion(int version) {
-         this.version = version;
-     }
-
-     public void setKey(String key) {
-         this.key = key;
-     }
-
-     public void setType(String type) {
-         this.type = type;
-     }
-
-     public void setRank(int rank) {
-         this.rank = rank;
-     }
-
-     public void setLocalizedName(String localizedName) {
-         this.localizedName = localizedName;
-     }
-
-     public void setEnglishName(String englishName) {
-         this.englishName = englishName;
-     }
-
-     public void setPrimaryPostalCode(String primaryPostalCode) {
-         this.primaryPostalCode = primaryPostalCode;
      }
  }

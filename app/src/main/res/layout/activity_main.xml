@@ -7,49 +7,48 @@
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/main_btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Search"
-        app:layout_constraintEnd_toEndOf="@+id/main_et_citysearch"
-        app:layout_constraintTop_toBottomOf="@+id/main_et_citysearch" />
-
     <EditText
         android:id="@+id/main_et_citysearch"
         android:layout_width="318dp"
         android:layout_height="69dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="101dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="City name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/main_fab_goto_forecastList" />
+
+    <Button
+        android:id="@+id/main_btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="@+id/main_et_citysearch"
+        app:layout_constraintTop_toBottomOf="@+id/main_et_citysearch" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_fab_goto_forecastList"
-        android:layout_width="74dp"
-        android:layout_height="68dp"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
-        android:layout_width="362dp"
-        android:layout_height="334dp"
-        android:layout_marginBottom="68dp"
+        android:layout_width="366dp"
+        android:layout_height="366dp"
+        android:layout_marginBottom="16dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.673"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent">
 
 
