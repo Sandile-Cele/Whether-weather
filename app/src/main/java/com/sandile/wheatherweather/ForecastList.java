@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.AccuPojo.Accu5DayPojo.DailyForecast;
 import com.AccuPojo.Accu5DayPojo.RootAccu5Day;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sandile.wheatherweather.AccuApi.IAccuWeatherApi;
 import com.sandile.wheatherweather.RecyclerView.RecyclerViewAdapter5Day;
 import com.sandile.wheatherweather.RecyclerView.SingleForecastItem;
 
@@ -35,6 +36,7 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast_list);
+
         //initializing pallets
         fab_goto_main = findViewById(R.id.forecastlist_fab_goto_main);
         fab_goto_main.setOnClickListener(this);
@@ -45,8 +47,8 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
 
         //initializing pallets done
 
-        int tempCityKey = ApiEngine.tempCityKey;// For now I have manually set this to "2884280"(Dubai)
-        ForecastApi(tempCityKey, new ApiEngine().RetrofitBuildBase());
+//CODE TO SHOW FORECAST ON LIST. int tempCityKey = ApiEngine.tempCityKey;// For now I have manually set this to "2884280"(Dubai)
+//                               ForecastApi(tempCityKey, new ApiEngine().RetrofitBuildBase());
 
         //Rv logic
         ArrayList<SingleForecastItem> singleForecastListObj = new ArrayList<>();
@@ -60,6 +62,8 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
         rv_5DayForecast.setHasFixedSize(true);//Set to true in increase performance. !!If you know know size of list will not change.
 
         rv_5DayForecast_Adapter = new RecyclerViewAdapter5Day(singleForecastListObj);//initializing adapter
+
+//        Log.d("Editable", "charAt",);
 
         rv_5DayForecast.setLayoutManager(rv_5DayForecast_layoutManager);
         rv_5DayForecast.setAdapter(rv_5DayForecast_Adapter);

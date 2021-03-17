@@ -1,4 +1,4 @@
-package com.sandile.wheatherweather;
+package com.sandile.wheatherweather.AccuApi;
 
 import com.AccuPojo.AccuCitySearchPojo.RootAccuCitySearch;
 

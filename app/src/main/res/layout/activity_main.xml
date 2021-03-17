@@ -4,52 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:name="MyNavigationService"
+    android:foregroundServiceType="location"
     tools:context=".MainActivity">
+
 
 
     <EditText
         android:id="@+id/main_et_citysearch"
-        android:layout_width="318dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:ems="10"
         android:hint="City name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_fab_goto_forecastList" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/main_btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_width="115dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="16dp"
         android:text="Search"
-        app:layout_constraintEnd_toEndOf="@+id/main_et_citysearch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_et_citysearch" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/main_fab_goto_forecastList"
+        android:id="@+id/main_fab_gotoForecastList"
         android:layout_width="57dp"
         android:layout_height="57dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="366dp"
         android:layout_height="366dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/main_fab_getLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_search">
 
 
         <TextView
@@ -62,13 +64,24 @@
     <ProgressBar
         android:id="@+id/main_pb_cityDetails"
         style="?android:attr/progressBarStyle"
-        android:layout_width="98dp"
-        android:layout_height="128dp"
+        android:layout_width="123dp"
+        android:layout_height="163dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_fab_getLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

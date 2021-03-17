@@ -1,17 +1,30 @@
 package com.sandile.wheatherweather;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.AccuPojo.AccuCitySearchPojo.RootAccuCitySearch;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sandile.wheatherweather.AccuApi.ApiEngine;
+import com.sandile.wheatherweather.AccuApi.IAccuWeatherApi;
 
 import java.util.List;
 
@@ -25,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_citysearch;
     private TextView tv_cityname;
     private EditText et_cityname;
-    private FloatingActionButton fab_goto_forecastList;
+    private FloatingActionButton fab_goto_forecastList, fab_getLocation;
     private ProgressBar pb_cityDetails;
     private IAccuWeatherApi oneIAccuWeatherApi;
 
@@ -33,43 +46,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-            //initializing pallets
+        //initializing pallets
         btn_citysearch = findViewById(R.id.main_btn_search);
         btn_citysearch.setOnClickListener(this);
 
         tv_cityname = findViewById(R.id.main_tv_cityname);
         et_cityname = findViewById(R.id.main_et_citysearch);
 
-        fab_goto_forecastList = findViewById(R.id.main_fab_goto_forecastList);
+        fab_goto_forecastList = findViewById(R.id.main_fab_gotoForecastList);
         fab_goto_forecastList.setOnClickListener(this);
+
+        fab_getLocation = findViewById(R.id.main_fab_getLocation);
+        fab_getLocation.setOnClickListener(this);
 
         pb_cityDetails = findViewById(R.id.main_pb_cityDetails);
 
+
+        //When user starts app ask them to enable location!
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.main_btn_search:
                 PhoneControl.hideKeyboard(this);
-                SearchCityApi(AccuCityTextBuilder(), new ApiEngine().RetrofitBuildBase());
+                AccuCitySearch(getCityText(), new ApiEngine().RetrofitBuildBase());
                 break;
-            case R.id.main_fab_goto_forecastList:
+            case R.id.main_fab_getLocation:
+                setLocation();
+                break;
+            case R.id.main_fab_gotoForecastList:
 //                finish();//This is to close activity
                 startActivity(new Intent(this, ForecastList.class));
                 break;
         }
     }
 
-    private String AccuCityTextBuilder() {
+    private void setLocation(){
+        if(LocationManager.SetCurrentLocation(this)){
+            LocationManager.restBool();
+            AccuCitySearch(LocationManager.getLocationString(), new ApiEngine().RetrofitBuildBase());
+        }
+        else{
+            Toast.makeText(this,"try again",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String getCityText() {
         return et_cityname.getText().toString().trim();
     }
 
-    private void SearchCityApi(String citySearch, IAccuWeatherApi oneIAccuObj) {//Static key set here
+    //This needs to move to Api engine But can't because "onResponse" method can't return strings which is need to assign to text view. 
+    private void AccuCitySearch(String searchCityInput, IAccuWeatherApi oneIAccuObj) {//Static key set here
         pb_cityDetails.setVisibility(View.VISIBLE);
-        Call<List<RootAccuCitySearch>> onAccuCitySearch = oneIAccuObj.getCitySearch(citySearch);
 
-        onAccuCitySearch.enqueue(new Callback<List<RootAccuCitySearch>>() {
+        if(searchCityInput.isEmpty()){
+            Toast.makeText(this,"City input data is empty" + searchCityInput,Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Call<List<RootAccuCitySearch>> onAccuCitySearch = oneIAccuObj.getCitySearch(searchCityInput);
+
+        onAccuCitySearch.enqueue(new  Callback<List<RootAccuCitySearch>>() {
             @Override
             public void onResponse(Call<List<RootAccuCitySearch>> call, Response<List<RootAccuCitySearch>> response) {
                 pb_cityDetails.setVisibility(View.GONE);
@@ -87,8 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String tempCityDetails = "";
 
                     tempCityDetails += "City rank: " + oneCity.getRank();
-                    tempCityDetails += "\n\nCity name: " +oneCity.getEnglishName();
-                    tempCityDetails += "\n\nCity key: " +oneCity.getKey();
+                    tempCityDetails += "\nCity name: " +oneCity.getEnglishName();
+                    tempCityDetails += "\nCity key: " +oneCity.getKey();
+                    tempCityDetails += "\nType: " +oneCity.getType();
+                    tempCityDetails += "\nCity localized name: " +oneCity.getLocalizedName();
 
                     tv_cityname.setText(tempCityDetails);
                 }

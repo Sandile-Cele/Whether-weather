@@ -1,4 +1,4 @@
-package com.sandile.wheatherweather;
+package com.sandile.wheatherweather.AccuApi;
 
 import com.AccuPojo.Accu5DayPojo.RootAccu5Day;
 import com.AccuPojo.AccuCitySearchPojo.RootAccuCitySearch;
@@ -21,4 +21,10 @@ public interface IAccuWeatherApi {//Responsible for returning call object
     @GET("locations/v1/cities/search?apikey=xkiA0fqNBMqMLSc2dHK8Q8aIwGjWnBAY")
     Call<List<RootAccuCitySearch>> getCitySearch(@Query("q") String citySearchText);
     // ^ ^ ^  This call object is type "list" because the json is of type list. TIP because json starts with "[".
+
+
+    //This is not in use, it is not needed BECAUSE text search also takes geoPosition
+    @GET("locations/v1/cities/geoposition/search?apikey=xkiA0fqNBMqMLSc2dHK8Q8aIwGjWnBAY&")
+    Call<RootAccuCitySearch> getCitySearchGeo(@Query("q") String citySearchGeo);//q=26.0932%2C%2028.0471
+
 }

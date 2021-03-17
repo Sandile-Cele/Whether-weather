@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="9dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,8 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="0dp"
-            android:padding="2dp" />
+            android:padding="2dp"
+            android:contentDescription="Image description" />
 
         <TextView
             android:id="@+id/forecastItem_tv_line1"

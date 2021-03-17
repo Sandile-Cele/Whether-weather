@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter5Day extends RecyclerView.Adapter<RecyclerViewAdapter5Day.RecyclerViewHolder> {
     private ArrayList<SingleForecastItem> singleForecastItemObj;
 
-            //Find out what this class does
+            //Find out what this class does. ???I think it fills it("RecyclerViewHolder") with data???
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageView;
         public TextView textView1;
@@ -55,9 +55,11 @@ public class RecyclerViewAdapter5Day extends RecyclerView.Adapter<RecyclerViewAd
 
         //"getImageResource()" getter method in "SingleForecastItem>getImageResource()" class I created
         //So basically take data in "singleForecastItemObj"(Which is populated) the shove it in the RV
-        holder.imageView.setImageResource(currentItem.getImageResource());
-        holder.textView1.setText(currentItem.getText1());
-        holder.textView2.setText(currentItem.getText2());
+//        holder.imageView.setImageResource(currentItem.getImageResource());
+        holder.textView1.setText("currentItem.getText1()");
+//        holder.textView1.setText(currentItem.getText1());
+        holder.textView2.setText("currentItem.getText2()");
+//        holder.textView2.setText(currentItem.getText2());
 
     }
 
