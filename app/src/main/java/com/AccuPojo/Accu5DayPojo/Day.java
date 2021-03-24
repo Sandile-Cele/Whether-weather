@@ -1,8 +1,9 @@
 package com.AccuPojo.Accu5DayPojo;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Day{
-    @SerializedName("Icon") 
+    @SerializedName("Icon")
     public int icon;
     @SerializedName("IconPhrase") 
     public String iconPhrase;

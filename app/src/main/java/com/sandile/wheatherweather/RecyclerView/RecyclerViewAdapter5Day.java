@@ -13,7 +13,7 @@ import com.sandile.wheatherweather.R;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter5Day extends RecyclerView.Adapter<RecyclerViewAdapter5Day.RecyclerViewHolder> {
+public class RecyclerViewAdapter5Day extends RecyclerView.Adapter<RecyclerViewAdapter5Day.RecyclerViewHolder> {//This is RV adapter
     private ArrayList<SingleForecastItem> singleForecastItemObj;
 
             //Find out what this class does. ???I think it fills it("RecyclerViewHolder") with data???
@@ -39,7 +39,7 @@ public class RecyclerViewAdapter5Day extends RecyclerView.Adapter<RecyclerViewAd
     @Override//????Something about assigning "static class RecyclerViewHolder" to views
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //"activity_forecast_list" is the xml for Recycler view
-        View viewObj = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_forecast_list, parent, false);
+        View viewObj = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_forecast_item, parent, false);
 
         //???I think "activity_forecast_list" is being passed to RecyclerViewHolder
         RecyclerViewHolder recyclerViewHolderObj = new RecyclerViewHolder(viewObj);
@@ -53,13 +53,12 @@ public class RecyclerViewAdapter5Day extends RecyclerView.Adapter<RecyclerViewAd
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         SingleForecastItem currentItem = singleForecastItemObj.get(position);
 
+
         //"getImageResource()" getter method in "SingleForecastItem>getImageResource()" class I created
         //So basically take data in "singleForecastItemObj"(Which is populated) the shove it in the RV
-//        holder.imageView.setImageResource(currentItem.getImageResource());
-        holder.textView1.setText("currentItem.getText1()");
-//        holder.textView1.setText(currentItem.getText1());
-        holder.textView2.setText("currentItem.getText2()");
-//        holder.textView2.setText(currentItem.getText2());
+        holder.imageView.setImageResource(currentItem.getImageResource());
+        holder.textView1.setText(currentItem.getText1());
+        holder.textView2.setText(currentItem.getText2());
 
     }
 

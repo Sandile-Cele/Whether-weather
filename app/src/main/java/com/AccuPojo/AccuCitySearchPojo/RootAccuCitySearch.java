@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
  public class RootAccuCitySearch {
 
-     //     CLASS NOT COMPLETE, MANY CLASSES ARE MISSING
+     //     CLASS NOT COMPLETE, MANY CLASSES + OBJECTS ARE MISSING
 
     @SerializedName("Version")
     private

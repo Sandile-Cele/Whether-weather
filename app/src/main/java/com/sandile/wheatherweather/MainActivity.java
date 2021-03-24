@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pb_cityDetails = findViewById(R.id.main_pb_cityDetails);
 
-
         //When user starts app ask them to enable location!
     }
 
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return et_cityname.getText().toString().trim();
     }
 
-    //This needs to move to Api engine But can't because "onResponse" method can't return strings which is need to assign to text view. 
+    //This needs to move to Api engine But can't because "onResponse" method can't return strings which is needed to assign to text view.
     private void AccuCitySearch(String searchCityInput, IAccuWeatherApi oneIAccuObj) {//Static key set here
         pb_cityDetails.setVisibility(View.VISIBLE);
 
@@ -114,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(!response.isSuccessful()){
                     tv_cityname.setText("response.isSuccessful: \n" + response.code());
+                    pb_cityDetails.setVisibility(View.GONE);
                     return;
                 }
 
@@ -142,4 +142,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,int[] grantResults){
+        //Check if user granted access to location
+    }
 }

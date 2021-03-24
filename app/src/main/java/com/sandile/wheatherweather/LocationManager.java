@@ -17,7 +17,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class LocationManager {
-    private static FusedLocationProviderClient fusedLocationClient;//Location thing
+    private static FusedLocationProviderClient fusedLocationClient;//Google api, get location and other things
     private static final int COARSE_LOCATION_REQUEST_CODE = 0;
     public static double longitude, latitude;
     public static Boolean isLocSet = false;

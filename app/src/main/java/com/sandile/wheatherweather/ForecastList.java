@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.AccuPojo.Accu5DayPojo.DailyForecast;
 import com.AccuPojo.Accu5DayPojo.RootAccu5Day;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sandile.wheatherweather.AccuApi.ApiEngine;
 import com.sandile.wheatherweather.AccuApi.IAccuWeatherApi;
 import com.sandile.wheatherweather.RecyclerView.RecyclerViewAdapter5Day;
 import com.sandile.wheatherweather.RecyclerView.SingleForecastItem;
@@ -23,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ForecastList extends AppCompatActivity implements View.OnClickListener {
+public class ForecastList extends AppCompatActivity implements View.OnClickListener {//This is a view
     private FloatingActionButton fab_goto_main;
     private ProgressBar pb_ladingList;
     private TextView tv_forecastList;
@@ -36,7 +38,6 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast_list);
-
         //initializing pallets
         fab_goto_main = findViewById(R.id.forecastlist_fab_goto_main);
         fab_goto_main.setOnClickListener(this);
@@ -45,29 +46,34 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
 
         tv_forecastList = findViewById(R.id.forecastList_tv_forecastList);
 
-        //initializing pallets done
+        rv_5DayForecast = findViewById(R.id.forecastList_rv_5DayForecast);
+        //DONE initializing pallets
 
 //CODE TO SHOW FORECAST ON LIST. int tempCityKey = ApiEngine.tempCityKey;// For now I have manually set this to "2884280"(Dubai)
 //                               ForecastApi(tempCityKey, new ApiEngine().RetrofitBuildBase());
 
-        //Rv logic
+
+
+                //Rv logic
         ArrayList<SingleForecastItem> singleForecastListObj = new ArrayList<>();
         singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_sun, "Max temp: 60, Min: 30", "Date: 15/03/2021"));
         singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_umbrella, "Max temp: 61, Min: 31", "Date: 16/03/2021"));
         singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_cloud, "Max temp: 62, Min: 32", "Date: 17/03/2021"));
 
-        rv_5DayForecast = findViewById(R.id.forecastList_rv_5DayForecast);
-
-        rv_5DayForecast_layoutManager = new LinearLayoutManager(this);//initializing
-        rv_5DayForecast.setHasFixedSize(true);//Set to true in increase performance. !!If you know know size of list will not change.
-
-        rv_5DayForecast_Adapter = new RecyclerViewAdapter5Day(singleForecastListObj);//initializing adapter
-
-//        Log.d("Editable", "charAt",);
+        rv_5DayForecast_layoutManager = new LinearLayoutManager(this);//initializing manager
+        rv_5DayForecast.setHasFixedSize(true);//Set to true in increase performance. !!If set to false(or not set) will load all the data into RV, but now because "true" will only load what can be viewed on screen.
 
         rv_5DayForecast.setLayoutManager(rv_5DayForecast_layoutManager);
+
+        rv_5DayForecast_Adapter = new RecyclerViewAdapter5Day(singleForecastListObj);//initializing adapter
         rv_5DayForecast.setAdapter(rv_5DayForecast_Adapter);
-        //Rv logic done
+
+        Log.d("Editable", "charAt");
+
+                //Rv logic done
+
+        //Proof API is working
+//        Accu5Day(ApiEngine.tempCityKey, new ApiEngine().RetrofitBuildBase());
     }
 
 
@@ -80,7 +86,10 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void ForecastApi(int cityKey, IAccuWeatherApi oneIAccuObj) {
+    //This must be API engine, but cant move it there because It's impossible to return values from
+    private void Accu5Day(int cityKey, IAccuWeatherApi oneIAccuObj) {
+        pb_ladingList.setVisibility(View.VISIBLE);
+
         Call<RootAccu5Day> forecastObj = oneIAccuObj.get5DayForecast(cityKey);
 
         forecastObj.enqueue(new Callback<RootAccu5Day>() {
@@ -88,7 +97,7 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
             public void onResponse(Call<RootAccu5Day> call, Response<RootAccu5Day> response) {
                 pb_ladingList.setVisibility(View.GONE);
 
-                if(!response.isSuccessful()){
+                if(!response.isSuccessful()){//If error occurs return
                     tv_forecastList.setText("Code: " + response.code());
                     return;
                 }
@@ -98,7 +107,7 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
                 tv_forecastList.append(AccuDetailsObj.getHeadline().getText() + "\n");
 
                 for(DailyForecast oneDay: AccuDetailsObj.getDailyForecasts()){
-//                    tv_cityname.append(oneDay.date.toString() + i++ + " Max temp: " + oneDay.temperature.maximum.getValue() + "\n");
+                    tv_forecastList.append(oneDay.date.toString() + " Max temp: " + oneDay.temperature.maximum.getValue() + "\n");
                 }
             }
 
@@ -111,5 +120,8 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void LoadRecyclerView(){
+
+    }
 
 }

@@ -10,7 +10,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiEngine {
+public class ApiEngine {//Using Retrofit
     private IAccuWeatherApi oneIAccuWeatherApi;
 
     public static int tempCityKey = 2884280;
@@ -26,35 +26,6 @@ public class ApiEngine {
         return retrofit.create(IAccuWeatherApi.class);//Using instance of interface to...
     }
 
-    private void SearchCityApi(String citySearch) {
-        Call<List<RootAccuCitySearch>> oneAccuCitySearch = oneIAccuWeatherApi.getCitySearch(citySearch);
-
-
-        oneAccuCitySearch.enqueue(new Callback<List<RootAccuCitySearch>>() {
-            @Override
-            public void onResponse(Call<List<RootAccuCitySearch>> call, Response<List<RootAccuCitySearch>> response) {
-
-                if(!response.isSuccessful()){
-                    return;
-                }
-
-
-//                for(RootAccuCitySearch oneCity: citySearchObj){
-//                    String tempCityDetails = "";
-//
-//                    tempCityDetails += "City rank: " + oneCity.getRank();
-//                    tempCityDetails += "\n\nCity name: " +oneCity.getEnglishName();
-//                    tempCityDetails += "\n\nCity key: " +oneCity.getKey();
-//
-//                    tv_cityname.setText(tempCityDetails);
-//                }
-            }
-
-            @Override
-            public void onFailure(Call<List<RootAccuCitySearch>> call, Throwable t) {
-//                pb_cityDetails.setVisibility(View.GONE);
-////                tv_cityname.setText(t.getMessage());
-            }
-        });
-    }
+    //Must add AccuCitySearch, found in main
+    //Must add Accu5Day, found in ForecastList, but impossible because can't return data in onResponse
 }
