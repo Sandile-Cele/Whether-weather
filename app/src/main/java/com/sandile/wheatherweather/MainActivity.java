@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab_getLocation.setOnClickListener(this);
 
         pb_cityDetails = findViewById(R.id.main_pb_cityDetails);
+        //Done initializing pallets
+
 
         //When user starts app ask them to enable location!
     }
@@ -76,9 +78,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_fab_gotoForecastList:
 //                finish();//This is to close activity
-                startActivity(new Intent(this, ForecastList.class));
+                if(isThereCityKey())
+                    startActivity(new Intent(this, ForecastList.class));
                 break;
         }
+    }
+
+    private Boolean isThereCityKey(){
+        if(ApiEngine.tempCityKey == 0){
+            Toast.makeText(this,"Search for city or get current location.",Toast.LENGTH_LONG).show();
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 
     private void setLocation(){
@@ -95,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return et_cityname.getText().toString().trim();
     }
 
+    //Cheating using for location search + text.
     //This needs to move to Api engine But can't because "onResponse" method can't return strings which is needed to assign to text view.
     private void AccuCitySearch(String searchCityInput, IAccuWeatherApi oneIAccuObj) {//Static key set here
         pb_cityDetails.setVisibility(View.VISIBLE);
@@ -118,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 List<RootAccuCitySearch> citySearchObj = response.body();
+
 
                 for(RootAccuCitySearch oneCity: citySearchObj){
                     ApiEngine.tempCityKey = oneCity.getKey();//Setting static key

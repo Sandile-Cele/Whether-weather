@@ -20,6 +20,8 @@ import com.sandile.wheatherweather.RecyclerView.RecyclerViewAdapter5Day;
 import com.sandile.wheatherweather.RecyclerView.SingleForecastItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,31 +51,14 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
         rv_5DayForecast = findViewById(R.id.forecastList_rv_5DayForecast);
         //DONE initializing pallets
 
+
 //CODE TO SHOW FORECAST ON LIST. int tempCityKey = ApiEngine.tempCityKey;// For now I have manually set this to "2884280"(Dubai)
 //                               ForecastApi(tempCityKey, new ApiEngine().RetrofitBuildBase());
 
-
-
-                //Rv logic
-        ArrayList<SingleForecastItem> singleForecastListObj = new ArrayList<>();
-        singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_sun, "Max temp: 60, Min: 30", "Date: 15/03/2021"));
-        singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_umbrella, "Max temp: 61, Min: 31", "Date: 16/03/2021"));
-        singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_cloud, "Max temp: 62, Min: 32", "Date: 17/03/2021"));
-
-        rv_5DayForecast_layoutManager = new LinearLayoutManager(this);//initializing manager
-        rv_5DayForecast.setHasFixedSize(true);//Set to true in increase performance. !!If set to false(or not set) will load all the data into RV, but now because "true" will only load what can be viewed on screen.
-
-        rv_5DayForecast.setLayoutManager(rv_5DayForecast_layoutManager);
-
-        rv_5DayForecast_Adapter = new RecyclerViewAdapter5Day(singleForecastListObj);//initializing adapter
-        rv_5DayForecast.setAdapter(rv_5DayForecast_Adapter);
-
-        Log.d("Editable", "charAt");
-
-                //Rv logic done
-
         //Proof API is working
-//        Accu5Day(ApiEngine.tempCityKey, new ApiEngine().RetrofitBuildBase());
+        Accu5Day(ApiEngine.tempCityKey, new ApiEngine().RetrofitBuildBase());
+        //pb_ladingList.setVisibility(View.GONE);
+
     }
 
 
@@ -86,6 +71,18 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void recyclerViewLogic(ArrayList<SingleForecastItem> inSingleForecastListObj){//
+
+        rv_5DayForecast_layoutManager = new LinearLayoutManager(this);//initializing manager
+        rv_5DayForecast.setHasFixedSize(true);//Set to true in increase performance. !!If set to false(or not set) will load all the data into RV, but now because "true" will only load what can be viewed on screen.
+
+        rv_5DayForecast.setLayoutManager(rv_5DayForecast_layoutManager);//Setting layout manager
+
+        rv_5DayForecast_Adapter = new RecyclerViewAdapter5Day(inSingleForecastListObj);//initializing adapter
+        rv_5DayForecast.setAdapter(rv_5DayForecast_Adapter);
+    }
+
+    //You cheated here make take in "AccuDetailsObj" object!
     //This must be API engine, but cant move it there because It's impossible to return values from
     private void Accu5Day(int cityKey, IAccuWeatherApi oneIAccuObj) {
         pb_ladingList.setVisibility(View.VISIBLE);
@@ -104,11 +101,15 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
 
                 RootAccu5Day AccuDetailsObj = response.body();
 
-                tv_forecastList.append(AccuDetailsObj.getHeadline().getText() + "\n");
+                tv_forecastList.append( " " + AccuDetailsObj.getHeadline().getText());
+
+                ArrayList<SingleForecastItem> singleForecastListObj = new ArrayList<>();
 
                 for(DailyForecast oneDay: AccuDetailsObj.getDailyForecasts()){
-                    tv_forecastList.append(oneDay.date.toString() + " Max temp: " + oneDay.temperature.maximum.getValue() + "\n");
+                    singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_sun, "Min: " + oneDay.temperature.minimum.getValue() + ", Max: " + oneDay.temperature.maximum.getValue(), "Date: " + oneDay.getDate().get(Calendar.DATE) + "/" + oneDay.getDate().get(Calendar.MONTH) + "/" + oneDay.getDate().get(Calendar.YEAR) ));
                 }
+
+                recyclerViewLogic(singleForecastListObj);//Use RV
             }
 
             @Override

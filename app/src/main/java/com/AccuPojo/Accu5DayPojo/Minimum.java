@@ -8,4 +8,16 @@ public class Minimum{
     public String unit;
     @SerializedName("UnitType") 
     public int unitType;
+
+    public double getValue() {
+        return value;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public int getUnitType() {
+        return unitType;
+    }
 }

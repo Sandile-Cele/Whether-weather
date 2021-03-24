@@ -18,11 +18,12 @@
 
     <TextView
         android:id="@+id/forecastList_tv_forecastList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
         android:text="Description:"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,24 +31,26 @@
         android:id="@+id/forecastlist_fab_goto_main"
         android:layout_width="57dp"
         android:layout_height="57dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forecastList_rv_5DayForecast"
-        android:layout_width="397dp"
-        android:layout_height="177dp"
-        android:background="@android:color/darker_gray"
+        android:layout_width="411dp"
+        android:layout_height="573dp"
+        android:background="#6BACACAC"
         android:padding="8dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forecastList_tv_forecastList"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--        android:verticalScrollbars="vertical"-->

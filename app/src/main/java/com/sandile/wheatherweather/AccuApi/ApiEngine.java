@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiEngine {//Using Retrofit
     private IAccuWeatherApi oneIAccuWeatherApi;
 
-    public static int tempCityKey = 2884280;
+    public static int tempCityKey = 0;
 
     public IAccuWeatherApi RetrofitBuildBase(){
         final String BASE_URL = "https://dataservice.accuweather.com/";
