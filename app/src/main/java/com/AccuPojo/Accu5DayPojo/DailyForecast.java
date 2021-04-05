@@ -8,26 +8,24 @@ import java.util.List;
 
 public class DailyForecast{
     @SerializedName("Date")
-    public Date date;
+    private Date date;
     @SerializedName("EpochDate")
-    public int epochDate;
+    private int epochDate;
     @SerializedName("Temperature")
-    public Temperature temperature;
+    private Temperature temperature;
     @SerializedName("Day")
-    public Day day;
+    private Day day;
     @SerializedName("Night")
-    public Night night;
+    private Night night;
     @SerializedName("Sources")
-    public List<String> sources;
+    private List<String> sources;
     @SerializedName("MobileLink")
-    public String mobileLink;
+    private String mobileLink;
     @SerializedName("Link")
-    public String link;
+    private String link;
 
-    public Calendar getDate() {
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(date);
-        return cal;
+    public Date getDate() {
+        return date;
     }
 
     public int getEpochDate() {

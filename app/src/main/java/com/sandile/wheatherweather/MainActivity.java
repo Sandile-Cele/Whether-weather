@@ -8,8 +8,11 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +29,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sandile.wheatherweather.AccuApi.ApiEngine;
 import com.sandile.wheatherweather.AccuApi.IAccuWeatherApi;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
 
 import PhoneOpertion.PhoneControl;
@@ -38,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_citysearch;
     private TextView tv_cityname;
     private EditText et_cityname;
-    private FloatingActionButton fab_goto_forecastList, fab_getLocation;
+    private FloatingActionButton fab_goto_forecastList, fab_getLocation, fab_screenshot;
     private ProgressBar pb_cityDetails;
     private IAccuWeatherApi oneIAccuWeatherApi;
 
@@ -59,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab_getLocation = findViewById(R.id.main_fab_getLocation);
         fab_getLocation.setOnClickListener(this);
 
+        fab_screenshot = findViewById(R.id.main_fab_screenshot);
+        fab_screenshot.setOnClickListener(this);
+
         pb_cityDetails = findViewById(R.id.main_pb_cityDetails);
         //Done initializing pallets
 
@@ -75,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_fab_getLocation:
                 setLocation();
+                break;
+            case R.id.main_fab_screenshot:
+                takeScreenshot();
                 break;
             case R.id.main_fab_gotoForecastList:
 //                finish();//This is to close activity
@@ -155,6 +167,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path to include sd card appending name you choose for file
+//            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+//            File imageFile = new File(mPath);
+
+//            FileOutputStream outputStream = new FileOutputStream(imageFile);
+//            int quality = 100;
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+//            outputStream.flush();
+//            outputStream.close();
+
+        }
+        catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+        }
+    }
+
+    private void openScreenshot(File imageFile) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(imageFile);
+        intent.setDataAndType(uri, "image/*");
+        startActivity(intent);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,int[] grantResults){

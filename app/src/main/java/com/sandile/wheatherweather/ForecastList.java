@@ -28,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ForecastList extends AppCompatActivity implements View.OnClickListener {//This is a view
-    private FloatingActionButton fab_goto_main;
+    private FloatingActionButton fab_goto_main, fab_share;
     private ProgressBar pb_ladingList;
     private TextView tv_forecastList;
 
@@ -43,6 +43,9 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
         //initializing pallets
         fab_goto_main = findViewById(R.id.forecastlist_fab_goto_main);
         fab_goto_main.setOnClickListener(this);
+
+        fab_share = findViewById(R.id.forecastList_fab_share);
+        fab_share.setOnClickListener(this);
 
         pb_ladingList = findViewById(R.id.forecastList_pb_ladingList);
 
@@ -68,8 +71,22 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
             case R.id.forecastlist_fab_goto_main:
 //                finish(); //This is to close activity
                 startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.forecastList_fab_share:
+                shareForecast();
         }
     }
+
+    private void shareForecast() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String body = "Download this";
+        String sub = "Your forecast is...";
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        intent.putExtra(Intent.EXTRA_TEXT, sub);
+        startActivity(Intent.createChooser(intent, "Share using"));
+    }
+
 
     private void recyclerViewLogic(ArrayList<SingleForecastItem> inSingleForecastListObj){//
 
@@ -106,7 +123,7 @@ public class ForecastList extends AppCompatActivity implements View.OnClickListe
                 ArrayList<SingleForecastItem> singleForecastListObj = new ArrayList<>();
 
                 for(DailyForecast oneDay: AccuDetailsObj.getDailyForecasts()){
-                    singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_sun, "Min: " + oneDay.temperature.minimum.getValue() + ", Max: " + oneDay.temperature.maximum.getValue(), "Date: " + oneDay.getDate().get(Calendar.DATE) + "/" + oneDay.getDate().get(Calendar.MONTH) + "/" + oneDay.getDate().get(Calendar.YEAR) ));
+                    singleForecastListObj.add(new SingleForecastItem(R.drawable.ic_sun, "Min: " + oneDay.getTemperature().minimum.getValue() + ", Max: " + oneDay.getTemperature().maximum.getValue(), "Date: " + oneDay.getDate().getDate() + "/" + oneDay.getDate().getMonth() + "/" + (oneDay.getDate().getYear() + 1900) ));
                 }
 
                 recyclerViewLogic(singleForecastListObj);//Use RV

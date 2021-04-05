@@ -40,7 +40,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forecastList_rv_5DayForecast"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="573dp"
         android:background="#6BACACAC"
         android:padding="8dp"
@@ -51,6 +51,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forecastList_tv_forecastList"
         app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/forecastList_fab_share"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_share" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--        android:verticalScrollbars="vertical"-->
